@@ -206,9 +206,9 @@ const tick = () =>
 
     let scrollY = window.scrollY
     camera.position.y = - scrollY / sizes.height * objectsDistance
-    mesh1.position.x = 2
-    mesh2.position.x = - 2
-    mesh3.position.x = 2
+    mesh1.position.x = 1
+    mesh2.position.x = - 1
+    mesh3.position.x = 1
 
     for(const mesh of sectionMeshes)
         {
