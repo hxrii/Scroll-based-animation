@@ -10,37 +10,61 @@ const parameters = {
     materialColor: '#ffeded'
 }
 
-gui
-    .addColor(parameters, 'materialColor')
 
-/**
- * Base
- */
-// Canvas
+
+//Texture loader
+const textureLoader = new THREE.TextureLoader();
+const gradientTex = textureLoader.load('/textures/gradients/3.jpg')
+gradientTex.magFilter = THREE.NearestFilter
+//Objects
+
 const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
 
+//MESHTOON MATERIAL
+const toonMaterial = new THREE.MeshToonMaterial(
+    {   color:parameters.materialColor,
+        gradientMap: gradientTex
+    })
 
-//Objects
+
+
+gui
+    .addColor(parameters, 'materialColor')
+    .onChange(() =>
+        {
+            toonMaterial.color.set(parameters.materialColor)
+        })
+
+
 
 const mesh1 = new THREE.Mesh(
     new THREE.TorusGeometry(1, 0.4, 16, 60),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    toonMaterial
 )
 
 const mesh2 = new THREE.Mesh(
     new THREE.ConeGeometry(1, 2, 32),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    toonMaterial
 )
 
 const mesh3 = new THREE.Mesh(
     new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    toonMaterial
 )
 
 scene.add(mesh1,mesh2,mesh3)
+
+
+//Adding lights
+const light = new THREE.DirectionalLight('#ffffff', 3)
+light.position.set(1, 1, 0)
+scene.add(light)
+
+
+
 
 
 /**
